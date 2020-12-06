@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+// gets username for display during game play and for history record keeping
 public class GetNameController {
 	public Main main = Main.getSource();
 	@FXML
