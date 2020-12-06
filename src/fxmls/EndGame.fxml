@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EndGameController">
+   <children>
+      <StackPane fx:id="contentPane">
+         <children>
+            <Pane fx:id="veil" prefHeight="200.0" prefWidth="200.0" />
+            <VBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <Label text="The winner is ...">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="winnerLabel" text="Label">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#showHome" text="Home" />
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>

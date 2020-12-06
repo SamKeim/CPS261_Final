@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HowToPlayController">
+   <children>
+      <StackPane fx:id="contentPane" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Pane fx:id="veil" stylesheets="@../application/application.css">
+               <StackPane.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </StackPane.margin>
+            </Pane>
+            <VBox alignment="TOP_CENTER" spacing="20.0">
+               <children>
+                  <Label text="How to Play Pig">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You and Waddles the pig will take turns rolling one six-sided dice.&#10;&#10;On your turn:&#10;     If you roll 2 - 6 you can:&#10;          Roll Again&#10;          OR&#10;          Bank - The sum of all rolls for this turn is added to your score, your turn ends.&#10;&#10;     If you roll 1, you bank 0 points this turn and your turn ends." wrappingWidth="416.220703125">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Button mnemonicParsing="false" onAction="#showMain" text="Home" />
+               </children>
+               <padding>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </padding>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</StackPane>
