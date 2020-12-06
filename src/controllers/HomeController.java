@@ -4,6 +4,7 @@ import application.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+// controller for home page with navigation to history, how to play, and start game
 public class HomeController {
 	@FXML
 	private Button playGame;

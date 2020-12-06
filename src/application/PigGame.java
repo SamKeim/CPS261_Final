@@ -32,7 +32,7 @@ public class PigGame implements Serializable {
 	// to generate fakes for testing
 	public PigGame(String playerName, int score, int opScore) {
 		this.playerName = playerName;
-		this.date.set(LocalDateTime.of(2020, 11, (score % 30) + 1, (int) ((Math.random() * 13) + 9),
+		this.date.set(LocalDateTime.of(2020, 11, (int) ((Math.random() * 28) + 1), (int) ((Math.random() * 13) + 9),
 				(int) ((Math.random() * 59) + 1), (int) ((Math.random() * 59) + 1)));
 
 		this.playerScore = score;
@@ -117,7 +117,7 @@ public class PigGame implements Serializable {
 	// I wanted to be able to format the date property in the high scores tables
 	// so I needed to use ObjectProperty for LocalDateTime
 	// which is not serializable, so I had to override the writeObject and
-	// readObject methods
+	// readObject methods below
 	private void writeObject(ObjectOutputStream s) throws IOException {
 		s.defaultWriteObject();
 		s.writeObject(playerName);

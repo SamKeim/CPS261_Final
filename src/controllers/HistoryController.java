@@ -39,44 +39,39 @@ public class HistoryController {
 	@FXML
 	TableView<PigGame> table = new TableView<PigGame>();
 
+	// Sends history list to controllers/HighScoresController.java
+	// to calculate number of wins per player.
 	public static ObservableList<PigGame> getHistory() {
 		return history;
 	}
 
+	// Startup method
 	@FXML
 	protected void initialize() {
-//		makeFakes();
-//		loadRecords();
-//		writeRecords();
-		
 		table.setEditable(false);
 
-		// create columns
+		// Create columns
 		dateColumn = new TableColumn<PigGame, LocalDateTime>("Date");
 		playerNameColumn = new TableColumn<PigGame, String>("Player's Name");
 		playerScoreColumn = new TableColumn<PigGame, Integer>("P. Score");
 		waddlesScoreColumn = new TableColumn<PigGame, Integer>("W. Score");
 		winnerColumn = new TableColumn<PigGame, String>("Winner");
 
-		// set width
-//		dateColumn.setMinWidth(80);
+		// Set width
 		playerNameColumn.setMinWidth(100);
 		playerScoreColumn.setMinWidth(40);
 		waddlesScoreColumn.setMinWidth(40);
 		winnerColumn.setMinWidth(100);
-		// SUM 398 (???)
-		
+
 		table.setItems(history);
 		
-		
-		// load data
+		// Load data and format date
 		dateColumn.setCellValueFactory(new PropertyValueFactory<PigGame, LocalDateTime>("date"));
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy h:mm a");
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 		dateColumn.setCellFactory(col -> new TableCell<PigGame, LocalDateTime>() {
 		    @Override
 		    protected void updateItem(LocalDateTime item, boolean empty) {
-		    	
 		        super.updateItem(item, empty);
 		        if (empty)
 		            setText(null);
@@ -85,12 +80,13 @@ public class HistoryController {
 		    }
 		});
 		
+		// Load remaining columns
 		playerNameColumn.setCellValueFactory(new PropertyValueFactory<PigGame, String>("playerName"));
 		playerScoreColumn.setCellValueFactory(new PropertyValueFactory<PigGame, Integer>("playerScore"));
 		waddlesScoreColumn.setCellValueFactory(new PropertyValueFactory<PigGame, Integer>("computerScore"));
 		winnerColumn.setCellValueFactory(new PropertyValueFactory<PigGame, String>("winner"));
 		
-		// add to tableview
+		// Add columns to tableview
 		table.getColumns().add(dateColumn);
 		table.getColumns().add(playerNameColumn);
 		table.getColumns().add(playerScoreColumn);
@@ -98,6 +94,7 @@ public class HistoryController {
 		table.getColumns().add(winnerColumn);
 	}
 
+	// Navigation
 	public void showMain() {
 		main.changeScene("Home.fxml");
 	}
@@ -106,10 +103,10 @@ public class HistoryController {
 		main.changeScene("HighScore.fxml");
 	}
 
+	// Reads from file on startup. Only called once from application/Main.java start()
 	public static void loadRecords() {
 		try {
 			history = FXCollections.observableArrayList();
-//			makeFakes();
 			
 			ois = new ObjectInputStream(new FileInputStream(FILENAME));
 			while (true) {
@@ -131,16 +128,12 @@ public class HistoryController {
 		}
 	}
 
+	// Adds recently-played game to table upon completion.
 	public static void addGame(PigGame game) {
 		history.add(game);
 	}
 
-	public static void viewRecords() {
-		for (PigGame pg : history) {
-			System.out.println(pg);
-		}
-	}
-
+	// Write to file on exit
 	public static void writeRecords() {
 		if (ois != null) {
 			if (oos == null) {
@@ -161,7 +154,7 @@ public class HistoryController {
 		}
 	}
 
-	// for testing
+	// Make fakes for testing
 	public static void makeFakes() {
 		history = FXCollections.observableArrayList();
 		String[] fakeNames = { "Novella", "Novella", "Novella", "Tamekia", "Tamekia", "Tamekia", "Brian", "Brian",

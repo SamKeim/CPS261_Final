@@ -48,22 +48,22 @@ public class GameController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {	
-//		get and set local variables
+//		Get and set local variables
 		game = PigGame.getActiveGame();
 		playerName = PigGame.getActiveGame().getPlayerName();
 		isBank = false;
 
-//		set text fields
+//		Set text fields
 		playerNameDisplay.setText(playerName + "'s Score");
 		turnDisplay.setText(playerName + "'s Turn:");
 
-//		set isPlayerTurn and call togglePlayerControlls() to setup first turn, player moves first
+//		Set isPlayerTurn and call togglePlayerControlls() to setup first turn, player moves first
 		isPlayerTurn = true;
 		togglePlayerControls();
 	}
 
 	public void updateDisplay() {
-		// in all situations except when the player rolls a 2-6,
+		// In all situations except when the player rolls a 2-6,
 		// wait a second to let player read output
 		System.out.println("Die : " + die);
 		if (!(isPlayerTurn && (die >= 2 && die <= 6))) {
@@ -72,7 +72,7 @@ public class GameController implements Initializable {
 			} catch (InterruptedException ie) {}
 		}
 
-		// update labels on screen
+		// Update labels on screen
 		Platform.runLater(() ->	{
 			if (isBank && !isPlayerTurn) { // update computer bank
 				waddlesScore.setText(String.valueOf(game.getComputerScore()));
@@ -80,7 +80,7 @@ public class GameController implements Initializable {
 			if (isBank && isPlayerTurn) { // update player bank
 				playerScore.setText(String.valueOf(game.getPlayerScore()));
 			}
-			// update displays to show who's turn it is, the current die roll,
+			// Update displays to show who's turn it is, the current die roll,
 			// and the current bank
 			turnDisplay.setText((isPlayerTurn ? playerName : "Waddles") + "'s Turn:");
 			diceDisplay.setText((die == 0 ? "" : String.valueOf(die)));
@@ -91,17 +91,17 @@ public class GameController implements Initializable {
 
 	public void rollDice() {
 		die = game.roll();
-		bank = (die == 1 ? 0 : bank + die); // if 1, bank is 0, otherwise add die to bank
+		bank = (die == 1 ? 0 : bank + die); // If 1, bank is emptied, otherwise add die to bank
 		updateDisplay();
 		
-		if (die == 1) { // if player rolls a 1, take computer turn
+		if (die == 1) { // If player rolls a 1, take computer turn
 			takeComputerTurnThread = new Thread(this::takeComputerTurn);
 			takeComputerTurnThread.start();
 		}
 
-		// if this roll sets the player at over 100pts, player automatically wins
-		// update bank, update screen, check that the game is complete
-		// and exit via endGame() method
+		// If this roll sets the player at over 100pts, player automatically wins.
+		// Update bank, update screen, check that the game is complete
+		// and exit via endGame() method.
 		if (bank + game.getPlayerScore() >= 100) {
 			game.bank(bank);
 			isBank = true;
@@ -114,7 +114,7 @@ public class GameController implements Initializable {
 
 	public void bankPoints() {
 		game.bank(bank);
-		// update display and score
+		// Update display and score
 		isBank = true;
 		updateDisplay();
 		takeComputerTurnThread = new Thread(this::takeComputerTurn);
@@ -122,7 +122,7 @@ public class GameController implements Initializable {
 	}
 
 	public void takeComputerTurn() {
-		// reset base values and update player controls
+		// Reset base values and update player controls
 		bank = 0;
 		die = 0;
 		updateDisplay();
@@ -134,30 +134,30 @@ public class GameController implements Initializable {
 //		EDIT: It's a little too hard to beat the computer at 20, so I'm dropping it to 18
 		do {
 			die = game.roll();
-			bank = (die == 1 ? 0 : bank + die); // if die is 1, set bank to 0, otherwise add die to bank
+			bank = (die == 1 ? 0 : bank + die); // If die is 1, empty the bank, otherwise add die to bank
 			updateDisplay();
 			
-			// If bank is 18 or greater, or if this roll sets the computer over 100, bank
-			// otherwise keep rolling
+			// If bank is 18 or greater, or if this roll sets the computer over 100, bank points.
+			// Otherwise keep rolling.
 			if (bank >= 18 || bank + game.getComputerScore() >= 100) {
 				game.setComputerScore(game.getComputerScore() + bank);
-				bank = 0; // empty bank
+				bank = 0; // Empty bank
 				if (game.isComplete()) {
 					endGame();
 				}
 				isBank = true;
 				updateDisplay();
-				break; // exits do-while
+				break; // Exits do-while
 			}
 		} while (die != 1);
 
-		if (die == 1) { // gives the user a chance to see that Waddles rolled a 1
+		if (die == 1) { // Gives the user a chance to see that Waddles rolled a 1
 			updateDisplay();
 			die = 0;
 			bank = 0;
 		}
 
-		// set playerturn and toggle controls to end turn
+		// Set playerturn and toggle controls to end turn
 		isPlayerTurn = true;
 		togglePlayerControls();
 		updateDisplay();
@@ -165,7 +165,7 @@ public class GameController implements Initializable {
 	}
 
 	public void togglePlayerControls() {
-//		set vbox's visibility based on who's turn it is
+//		Set VBox's visibility based on who's turn it is
 		playerControlls.setVisible(isPlayerTurn);
 		waddlesImg.setVisible(!isPlayerTurn);
 	}

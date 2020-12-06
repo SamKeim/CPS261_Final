@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+
+// a quick pojo to track the accumulated number of wins of the players
+// does not write to file, this recalculates every time the high-score board is viewed
 public class HighScore {
-	// a quick pojo to track the accumulated number of wins of the players
 	private String playerName;
 	private Integer numWins;
 	private ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<LocalDateTime>();

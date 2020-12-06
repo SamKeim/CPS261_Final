@@ -29,6 +29,7 @@ public class Main extends Application {
 		// save stage to make for easy switching of scenes later
 		localPrimaryStage = primaryStage;
 		
+		// load fxml
 		StackPane root = null;
 		try {
 			root = (StackPane) FXMLLoader.load(getClass().getResource("../fxmls/Home.fxml"));
@@ -59,7 +60,10 @@ public class Main extends Application {
 	}
 
 	public void changeScene(String filepath) {
+		// resource
+		// https://www.youtube.com/watch?v=XCgcQTQCfJQ
 		try {
+			// get as url in order to add src/fxmls to filepath
 			URL url = new File("src/fxmls/" + filepath).toURI().toURL();
 			Parent parent = FXMLLoader.load(url);
 			Scene scene = new Scene(parent);

@@ -5,6 +5,7 @@ import application.PigGame;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+// simple controller to display winner with one button to navigate to home
 public class EndGameController {
 	public Main main = Main.getSource();
 	@FXML
