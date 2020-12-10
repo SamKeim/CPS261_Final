@@ -10,7 +10,7 @@
 }
 
 #background {
-	-fx-background-image: url("../../SunnyBackground.jpg");
+	-fx-background-image: url("../img/SunnyBackground.jpg");
 	-fx-background-size: 560 560;
 	-fx-pref-height: 550;
 	-fx-pref-width: 550;
@@ -20,5 +20,9 @@
 .button {
 	-fx-font-size: 18px;
 	-fx-pref-width: 150px;
-	
+}
+
+#diceBorder {
+	-fx-border-color: #000000;
+	-fx-border-width: 2px;
 }

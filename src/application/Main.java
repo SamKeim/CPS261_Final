@@ -50,7 +50,7 @@ public class Main extends Application {
 
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("The Game of Pig");
-		primaryStage.getIcons().add(new Image("file:icon.jpg"));
+		primaryStage.getIcons().add(new Image("file:src/img/icon.jpg"));
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

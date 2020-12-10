@@ -51,7 +51,7 @@
       </StackPane>
       <ImageView fitHeight="300.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
          <image>
-            <Image url="@../../WaddlesClose.png" />
+            <Image url="@../img/WaddlesClose.png" />
          </image>
       </ImageView>
    </children>

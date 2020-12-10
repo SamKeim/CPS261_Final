@@ -161,9 +161,9 @@ public class HistoryController {
 				"Brian", "Brian" };
 		for (int i = 0; i < 10; i++) {
 			if(i % 2 == 0) {
-				history.add(new PigGame(fakeNames[i], 75 + (int)((Math.random() * 15) + 5), 100 + (int)((Math.random() * 15) + 5)));
+				history.add(new PigGame(fakeNames[i], 75 + (int)((Math.random() * 15) + 5), 99 + (int)((Math.random() * 6) + 1)));
 			} else {
-				history.add(new PigGame(fakeNames[i], 100 + (int)((Math.random() * 15) + 5), 75 + (int)((Math.random() * 15) + 5)));				
+				history.add(new PigGame(fakeNames[i], 99 + (int)((Math.random() * 6) + 1), 75 + (int)((Math.random() * 15) + 5)));				
 			}
 		}
 	}

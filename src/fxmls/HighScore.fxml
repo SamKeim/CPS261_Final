@@ -29,7 +29,7 @@
             </HBox>
             <ImageView fitHeight="175.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Score.png" />
+                  <Image url="@../img/Score.png" />
                </image>
             </ImageView>
          </children>

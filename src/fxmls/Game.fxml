@@ -53,11 +53,15 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="diceDisplay" text="0">
-                                 <font>
-                                    <Font name="System Bold" size="36.0" />
-                                 </font>
-                              </Label>
+                              <StackPane fx:id="diceBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                                 <children>
+                                    <ImageView fx:id="diceImg" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/die/1.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
                               <Label fx:id="bankDisplay" text="Bank: 0">
                                  <font>
                                     <Font size="18.0" />
@@ -99,7 +103,7 @@
             </GridPane>
             <ImageView fx:id="waddlesImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
                <image>
-                  <Image url="@../../SittingMud.png" />
+                  <Image url="@../img/SittingMud.png" />
                </image>
             </ImageView>
          </children>
