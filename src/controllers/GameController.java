@@ -2,7 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Set;
 
 import application.Main;
 import application.PigGame;
@@ -68,64 +68,52 @@ public class GameController implements Initializable {
 		bankButton.setDisable(bank == 0);
 		
 		
-		///////////TESTING
-		game.setPlayerScore(90);
+		
+		
 		game.setComputerScore(90);
+		game.setPlayerScore(90);
 	}
 
 	public void rollAnimation() {
-		System.out.println("==========\nrollAnimation() start : " + Thread.currentThread().toString());
-		
 		die = game.roll();
-//		die = 1;
-		System.out.println("rollAnimation() die : " + die);
-
-		
 		// Wrapper transition
 		SequentialTransition dieAnimation = new SequentialTransition();
 		PauseTransition pause = new PauseTransition(Duration.millis(100));
 
 		// Roll die mechanics
 		FadeTransition switchImage = new FadeTransition(Duration.millis(0), diceImg);
-		switchImage.setOnFinished(e -> 
-			diceImg.setImage(new Image("img/die/" + (int)((Math.random() * 6) + 1) + ".png")));
+		switchImage
+				.setOnFinished(e -> diceImg.setImage(new Image("img/die/" + (int) ((Math.random() * 6) + 1) + ".png")));
 		SequentialTransition rollAnimation = new SequentialTransition(switchImage, pause);
-		rollAnimation.setCycleCount(7);
+		rollAnimation.setCycleCount(5);
 
 		// Set transition to die face that it landed on
 		FadeTransition endImage = new FadeTransition(Duration.millis(0), diceImg);
 		endImage.setOnFinished(e -> diceImg.setImage(new Image("img/die/" + die + ".png")));
 		SequentialTransition endAnimation = new SequentialTransition(endImage, pause);
 		endAnimation.setCycleCount(1);
-		
-		dieAnimation.getChildren().addAll(rollAnimation, endAnimation);
-		dieAnimation.play();		
 
-//		System.out.println("rollDice if(die == 1){} : " + (die == 1));
-//		// FOR WHATEVER REASON this logic has to exist here. If it exists in the player's rollDie() method
-//		// it will evaluate this code block /before/ it actually rolls a die resulting in a false negative
-//		if (isPlayerTurn && die == 1) { // If player rolls a 1, take computer turn
-//			bank = (die == 1 ? 0 : bank + die); // If 1, bank is emptied, otherwise add die to bank
-//			updateDisplay();
-//			takeComputerTurnThread = new Thread(this::takeComputerTurn);
-//			takeComputerTurnThread.start();
-//		} else {
-//			System.out.println("ELSE! Die : " + die);
+		dieAnimation.getChildren().addAll(rollAnimation, endAnimation);
+		dieAnimation.play();
+//		synchronized(GameController.this) {
+//			dieAnimation.play();
 //		}
-		System.out.println("rollAnimation() end\n==========\n");
-		
 	}
 
 	public void updateDisplay() {
-		System.out.println("updateDisplay() start");
 		// In all situations except when the player rolls a 2-6,
 		// wait a second to let player read output
 		if (isBank || die == 1 || !isPlayerTurn) {
 			try {
-				Thread.sleep(1700);
-			} catch (InterruptedException ie) {}
+				if (die == 1 && isPlayerTurn) {
+					Thread.sleep(1000);
+				} else {
+					Thread.sleep(1300);
+				}
+			} catch (InterruptedException ie) {
+			}
 		}
-		
+
 		// Update labels on screen
 		Platform.runLater(() -> {
 			if (isBank && !isPlayerTurn) { // update computer bank
@@ -141,27 +129,24 @@ public class GameController implements Initializable {
 			bankDisplay.setText("Bank: " + bank);
 			isBank = false; // default
 		});
-		System.out.println("updateDisplay() end");
 	}
 
 	public void rollDice() {
-		System.out.println("==========\nrollDice() start: " + Thread.currentThread().toString());
-
-//		Thread tester = new Thread(this::rollAnimation);
-//		tester.start();
-
 		rollAnimation();
+//		if (die == 1 || bank + game.getPlayerScore() >= 100) {
+//			try {
+//				Thread.sleep(700);
+//			} catch (InterruptedException ie) {
+//			}
+//		}
+
 		bank = (die == 1 ? 0 : bank + die);
 		updateDisplay();
-		
-		// MOVED TO rollAnimation()
-		System.out.println("rollDice if(die == 1){} : " + (die == 1));
+
 		if (die == 1) { // If player rolls a 1, take computer turn
 			updateDisplay();
 			takeComputerTurnThread = new Thread(this::takeComputerTurn);
 			takeComputerTurnThread.start();
-		} else {
-			System.out.println("ELSE! Die : " + die);
 		}
 
 		// If this roll sets the player at over 100pts, player automatically wins.
@@ -173,7 +158,6 @@ public class GameController implements Initializable {
 				endGame();
 			}
 		}
-		System.out.println("rollDice() end\n==========\n");
 	}
 
 	public void bankPoints() {
@@ -181,14 +165,14 @@ public class GameController implements Initializable {
 		// Update display and score
 		isBank = true;
 		updateDisplay();
-		if(!game.isComplete()) {
+		if (!game.isComplete()) {
 			takeComputerTurnThread = new Thread(this::takeComputerTurn);
+			takeComputerTurnThread.setName("ComputerTurnThread");
 			takeComputerTurnThread.start();
 		}
 	}
 
 	public void takeComputerTurn() {
-		System.out.println("==========\ntakeComputerTurn() start");
 		// Reset base values and update player controls
 		bank = 0;
 		updateDisplay();
@@ -219,16 +203,14 @@ public class GameController implements Initializable {
 		} while (die != 1);
 
 		if (die == 1) { // Gives the user a chance to see that Waddles rolled a 1
-			updateDisplay();
 			bank = 0;
+			updateDisplay();
 		}
 
 		// Set playerturn and toggle controls to end turn
 		isPlayerTurn = true;
 		togglePlayerControls();
 		updateDisplay();
-		System.out.println("takeComputerTurn() end\n==========\n");
-
 	}
 
 	public void togglePlayerControls() {

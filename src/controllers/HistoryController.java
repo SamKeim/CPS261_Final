@@ -157,8 +157,8 @@ public class HistoryController {
 	// Make fakes for testing
 	public static void makeFakes() {
 		history = FXCollections.observableArrayList();
-		String[] fakeNames = { "Novella", "Novella", "Novella", "Tamekia", "Tamekia", "Tamekia", "Brian", "Brian",
-				"Brian", "Brian" };
+		String[] fakeNames = { "Mabel", "Mabel", "Mabel", "Mabel", "Dipper", "Dipper", "Dipper", "Stan",
+				"Stan", "Stan" };
 		for (int i = 0; i < 10; i++) {
 			if(i % 2 == 0) {
 				history.add(new PigGame(fakeNames[i], 75 + (int)((Math.random() * 15) + 5), 99 + (int)((Math.random() * 6) + 1)));
