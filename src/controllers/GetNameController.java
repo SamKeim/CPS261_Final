@@ -16,25 +16,29 @@ public class GetNameController {
 	@FXML
 	private Button exitButton;
 
-	public void showHome() {
-		main.changeScene("Home.fxml");
+	@FXML
+	protected void initialize() {
+		if (PigGame.getActiveGame() == null) {
+			PigGame.newActiveGame();
+		}
 	}
 
+	// Navigation
+	public void showHome() {
+		PigGame.deleteActiveGame();
+		main.changeScene("Home.fxml");
+	}
+	public void showSettings() {
+		main.changeScene("Settings.fxml");
+	}
+
+	// Save name and navigate to game
 	public void showGame() {
 		if (nameEntry.getText().isBlank()) {
-			PigGame.setActiveGame("User");
+			PigGame.getActiveGame().setPlayerName("User"); // Default name
 		} else {
-			PigGame.setActiveGame(nameEntry.getText());
+			PigGame.getActiveGame().setPlayerName(nameEntry.getText());
 		}
 		main.changeScene("Game.fxml");
 	}
-
-	public String getName() {
-		if (nameEntry.getText().isBlank()) {
-			return "User";
-		} else {
-			return nameEntry.getText();
-		}
-	}
-
 }

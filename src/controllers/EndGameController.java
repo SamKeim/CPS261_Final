@@ -5,7 +5,7 @@ import application.PigGame;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-// simple controller to display winner with one button to navigate to home
+// Displays winner with one button to navigate to home
 public class EndGameController {
 	public Main main = Main.getSource();
 	@FXML
@@ -19,9 +19,10 @@ public class EndGameController {
 		if(PigGame.getActiveGame().isWinner()) {
 			endText.setText("\"A simple congratulations from a simple pig.\"");
 		} else {
-			endText.setText("\"I'm loosing to a pig!!\"");
+			endText.setText("\"I'm losing to a pig!!\"");
 		}
 	}
+	
 	public void showHome() {
 		main.changeScene("Home.fxml");
 	}

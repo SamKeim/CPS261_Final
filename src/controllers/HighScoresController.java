@@ -16,7 +16,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-
 // Using streams, calculate the number of wins per player and display in tableview
 public class HighScoresController {
 
@@ -29,40 +28,6 @@ public class HighScoresController {
 	@FXML
 	private TableColumn<HighScore, Integer> numWinsColumn;
 	public Main main = Main.getSource();
-
-	// Navigation
-	public void showLeaderboard() {
-		main.changeScene("History.fxml");
-	}
-
-	// Navigation
-	public void showHome() {
-		main.changeScene("Home.fxml");
-	}
-
-	// Calculations using streams
-	public ObservableList<HighScore> getHighScores() {
-		// Setup Lists for history and new highscore display
-		List<PigGame> history = HistoryController.getHistory().stream().collect(Collectors.toList());
-		ObservableList<HighScore> highScores = FXCollections.observableArrayList();
-
-		// Get list of unique names
-		List<String> listOfNames = history.stream().filter(e -> e.isWinner()).map(e -> e.getPlayerName()).distinct()
-				.collect(Collectors.toList());
-		for (String name : listOfNames) {
-			// Get max date, ie most recent game
-			LocalDateTime date = history.stream().filter(e -> e.getPlayerName().equals(name)).map(e -> e.getDate())
-					.max(LocalDateTime::compareTo).get();
-
-			// Get number wins
-			Integer numWins = (int) history.stream().filter(e -> e.isWinner()).filter(e -> e.getPlayerName().equals(name)).count();
-
-			highScores.add(new HighScore(date, name, numWins));
-		}
-		// Sort by number of wins
-		highScores.sort((HighScore hs1, HighScore hs2) -> hs2.getNumWins() - hs1.getNumWins());
-		return highScores;
-	}
 
 	@FXML
 	protected void initialize() {
@@ -83,15 +48,15 @@ public class HighScoresController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy h:mm a");
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 		dateColumn.setCellFactory(col -> new TableCell<HighScore, LocalDateTime>() {
-		    @Override
-		    protected void updateItem(LocalDateTime item, boolean empty) {
-		    	
-		        super.updateItem(item, empty);
-		        if (empty)
-		            setText(null);
-		        else
-		            setText(String.format(item.format(formatter)));
-		    }
+			@Override
+			protected void updateItem(LocalDateTime item, boolean empty) {
+
+				super.updateItem(item, empty);
+				if (empty)
+					setText(null);
+				else
+					setText(String.format(item.format(formatter)));
+			}
 		});
 
 		// Load data for remaining columns
@@ -105,4 +70,36 @@ public class HighScoresController {
 		highScoreTable.setItems(hs);
 	}
 
+	// Calculations using streams
+	public ObservableList<HighScore> getHighScores() {
+		// Setup Lists for history and new highscore display
+		List<PigGame> history = HistoryController.getHistory().stream().collect(Collectors.toList());
+		ObservableList<HighScore> highScores = FXCollections.observableArrayList();
+
+		// Get list of unique names
+		List<String> listOfNames = history.stream().filter(e -> e.isWinner()).map(e -> e.getPlayerName()).distinct()
+				.collect(Collectors.toList());
+		for (String name : listOfNames) {
+			// Get max date, ie most recent game
+			LocalDateTime date = history.stream().filter(e -> e.getPlayerName().equals(name)).map(e -> e.getDate())
+					.max(LocalDateTime::compareTo).get();
+
+			// Get number wins
+			Integer numWins = (int) history.stream().filter(e -> e.isWinner())
+					.filter(e -> e.getPlayerName().equals(name)).count();
+
+			highScores.add(new HighScore(date, name, numWins));
+		}
+		// Sort by number of wins
+		highScores.sort((HighScore hs1, HighScore hs2) -> hs2.getNumWins() - hs1.getNumWins());
+		return highScores;
+	}
+
+	// Navigation
+	public void showLeaderboard() {
+		main.changeScene("History.fxml");
+	}
+	public void showHome() {
+		main.changeScene("Home.fxml");
+	}
 }

@@ -26,6 +26,11 @@
                         <Insets />
                      </opaqueInsets>
                   </Label>
+                  <Label text="with Waddles the Pig">
+                     <font>
+                        <Font name="System Italic" size="14.0" />
+                     </font>
+                  </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
                         <Button fx:id="playGame" mnemonicParsing="false" onAction="#showGetName" prefWidth="150.0" text="Play Game">
@@ -39,6 +44,9 @@
                            </font>
                         </Button>
                      </children>
+                     <padding>
+                        <Insets bottom="-10.0" top="-10.0" />
+                     </padding>
                   </HBox>
                   <Button fx:id="howToPlay" alignment="CENTER" mnemonicParsing="false" onAction="#showHowToPlay" prefWidth="150.0" text="How to Play">
                      <font>

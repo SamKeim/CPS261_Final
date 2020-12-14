@@ -3,21 +3,27 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import controllers.HistoryController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	private static Main singleton = null;
 	private static Stage localPrimaryStage = null;
 
+	// This isn't a proper singleton, since there's no private constructor, but it's
+	// a relative singleton.
+	// "I had a cousin named Singleton, he was an only child and his parents decided
+	// to get creative with his name."
 	public static Main getSource() {
 		if (singleton == null)
 			singleton = new Main();
@@ -28,7 +34,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		// save stage to make for easy switching of scenes later
 		localPrimaryStage = primaryStage;
-		
+
 		// load fxml
 		StackPane root = null;
 		try {
@@ -37,7 +43,7 @@ public class Main extends Application {
 			root = new StackPane();
 			root.getChildren().add(new Label("Unable to load FXML. Please try again."));
 		}
-		
+
 		Scene scene = new Scene(root, 550, 550);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -60,10 +66,9 @@ public class Main extends Application {
 	}
 
 	public void changeScene(String filepath) {
-		// resource
-		// https://www.youtube.com/watch?v=XCgcQTQCfJQ
+		// Changes FXML file / scene in primary stage
+		// resource https://www.youtube.com/watch?v=XCgcQTQCfJQ
 		try {
-			// get as url in order to add src/fxmls to filepath
 			URL url = new File("src/fxmls/" + filepath).toURI().toURL();
 			Parent parent = FXMLLoader.load(url);
 			Scene scene = new Scene(parent);
@@ -71,7 +76,15 @@ public class Main extends Application {
 			localPrimaryStage.setScene(scene);
 			localPrimaryStage.show();
 		} catch (IOException ioe) {
-			System.out.println(ioe);
+			// Shows error message on screen and sets up button to navigate home
+			VBox root = new VBox();
+			Button button = new Button("Back to Home.");
+			button.setOnAction((e) -> changeScene("home.fxml"));
+			root.setAlignment(Pos.CENTER);
+			root.getChildren().add(new Label("Unable to load FXML. Please try again."));
+			root.getChildren().add(button);
+			localPrimaryStage.setScene(new Scene(root, 550, 550));
+			localPrimaryStage.show();
 		}
 	}
 }

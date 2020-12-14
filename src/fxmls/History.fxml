@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -13,6 +14,7 @@
    <children>
       <StackPane fx:id="contentPane">
          <children>
+            <Pane fx:id="veil" prefHeight="200.0" prefWidth="200.0" />
             <VBox alignment="CENTER" spacing="20.0">
                <children>
                   <Label fx:id="leaderboardHeader" alignment="CENTER" text="Scores">

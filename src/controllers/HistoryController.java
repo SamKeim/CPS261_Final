@@ -39,13 +39,13 @@ public class HistoryController {
 	@FXML
 	TableView<PigGame> table = new TableView<PigGame>();
 
-	// Sends history list to controllers/HighScoresController.java
+	// For sending history list to controllers/HighScoresController.java
 	// to calculate number of wins per player.
 	public static ObservableList<PigGame> getHistory() {
 		return history;
 	}
 
-	// Startup method
+	// Startup method to construct TableView
 	@FXML
 	protected void initialize() {
 		table.setEditable(false);
@@ -107,17 +107,17 @@ public class HistoryController {
 	public static void loadRecords() {
 		try {
 			history = FXCollections.observableArrayList();
-			
 			ois = new ObjectInputStream(new FileInputStream(FILENAME));
+
 			while (true) {
 				PigGame pg = (PigGame) ois.readObject();
 				history.add(pg);
 			}
 		} catch (EOFException eofe) {			
 		} catch (IOException ioe) {
-			System.out.println(ioe);
+			System.out.println("HistoryController.java " + ioe);
 		} catch (ClassNotFoundException cnfe) {
-			System.out.println(cnfe);
+			System.out.println("HistoryController.java " + cnfe);
 		} finally {
 			try {
 				if (ois != null)
@@ -143,14 +143,14 @@ public class HistoryController {
 						oos.writeObject(history.get(i));
 					}
 				} catch (FileNotFoundException fnfe) {
-					System.out.println(fnfe);
+					System.out.println("HistoryController.java " + fnfe);
 				} catch (IOException ioe) {
-					System.out.println(ioe);
+					System.out.println("HistoryController.java " + ioe);
 				}
 
 			}
 		} else {
-			System.out.println("No file to close");
+			System.out.println("HistoryController.java: No file to close.");
 		}
 	}
 
@@ -167,5 +167,4 @@ public class HistoryController {
 			}
 		}
 	}
-
 }

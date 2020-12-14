@@ -6,8 +6,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 
-// a quick pojo to track the accumulated number of wins of the players
-// does not write to file, this recalculates every time the high-score board is viewed
+// Tracks the accumulated number of wins of the players,
+// these objects are not written to file, and recalculates every time the high-score board is viewed.
 public class HighScore {
 	private String playerName;
 	private Integer numWins;
@@ -39,6 +39,6 @@ public class HighScore {
 
 	@Override
 	public String toString() {
-		return String.format("HighScore [%s, %s, %d]", date, playerName, numWins);
+		return String.format("HighScore [date=%s, playerName=%s, numWins=%d]", date, playerName, numWins);
 	}
 }
